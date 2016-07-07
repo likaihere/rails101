@@ -13,11 +13,11 @@ class GroupsController < ApplicationController
 	end
 
 	def edit
-		@group = Group.find(params[:id])
+		@group = current_user.groups.find(params[:id])
 	end
 
 	def update
-		@group = Group.find(params[:id])
+		@group = current_user.groups.find(params[:id])
 
 		if @group.update(group_params)
 				redirect_to groups_path, notice: "修改讨论版成功"
@@ -27,7 +27,7 @@ class GroupsController < ApplicationController
 	end
 
 	def create
-		@group = Group.new(group_params)
+		@group = current_user.groups.new(group_params)
 		if @group.save
 			redirect_to groups_path
 		else
@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
 	end
 
 	def destroy
-		@group = Group.find(params[:id])
+		@group = current_user.groups.find(params[:id])
 		@group.destroy
 		redirect_to groups_path, alert: "讨论版已删除"
 	end
